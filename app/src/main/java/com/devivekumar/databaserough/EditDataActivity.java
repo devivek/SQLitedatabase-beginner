@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class EditDataActivity extends AppCompatActivity {
-    private int id;
     private String name;
     EditText editText;
     Button updateButton;
@@ -24,7 +23,6 @@ public class EditDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_data);
         editText= findViewById(R.id.textView2);
         Intent getIntent= getIntent();
-        id=getIntent.getIntExtra("id",-1);
         name= getIntent.getStringExtra("name");
         editText.setText(name);
         updateButton=findViewById(R.id.saveButton);
@@ -39,8 +37,6 @@ public class EditDataActivity extends AppCompatActivity {
                     toastMessage("can't be blank");
                 }
                 else{
-                    id++;
-                    id++;
                     newName= editText.getText().toString();
                     databaseHelper.updateName(newName,name);
                     Log.d(TAG, "updating "+ name+" "+"to "+newName);

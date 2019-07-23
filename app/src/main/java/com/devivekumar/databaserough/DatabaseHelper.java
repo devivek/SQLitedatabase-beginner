@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COL2 = "name";
 
 
-    public DatabaseHelper(Context context) {
+     DatabaseHelper(Context context) {
         super(context, TABLE_NAME, null, 1);
     }
 
@@ -30,31 +30,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE " + TABLE_NAME);
         onCreate(db);
     }
-    public  boolean addData(String data){
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues contentValues= new ContentValues();
-        contentValues.put(COL2,data);
+
+    boolean addData(String data) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL2, data);
         Log.d(TAG, "addData: Data is being added");
-        long result = db.insert(TABLE_NAME,null,contentValues);
-        Log.d(TAG, "addData: result "+result);
-        return result==-1?false:true;
+        long result = db.insert(TABLE_NAME, null, contentValues);
+        Log.d(TAG, "addData: result " + result);
+        return result == -1;
     }
-    public Cursor getData(){
-        SQLiteDatabase db= getWritableDatabase();
+
+    Cursor getData() {
+        SQLiteDatabase db = getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
-        Cursor data=db.rawQuery(query,null);
-        return data;
+        return db.rawQuery(query, null);
     }
-    public void updateName(String newName,String oldName){
-        SQLiteDatabase db=getWritableDatabase();
-        String query="UPDATE "+ TABLE_NAME+" SET "+ COL2+" = '"+newName+"' WHERE "+COL2+" = '"+oldName+"'";
-        Log.d(TAG, "updateName: query " +query);
+
+    void updateName(String newName, String oldName) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "UPDATE " + TABLE_NAME + " SET " + COL2 + " = '" + newName + "' WHERE " + COL2 + " = '" + oldName + "'";
+        Log.d(TAG, "updateName: query " + query);
         db.execSQL(query);
     }
-    public void deleteName(String oldName){
-        SQLiteDatabase db=getWritableDatabase();
-        String query="DELETE FROM "+ TABLE_NAME+" WHERE "+COL2+" = '"+oldName+"'";
-        Log.d(TAG, "updateName: query " +query);
+
+    void deleteName(String oldName) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + COL2 + " = '" + oldName + "'";
+        Log.d(TAG, "updateName: query " + query);
         db.execSQL(query);
+    }
+
+    boolean isNullOrNot() {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME;
+        Cursor data = db.rawQuery(query, null);
+        if (data.moveToFirst()) {
+            data.close();
+            return true;
+        } else {
+            data.close();
+            return false;
+        }
+
     }
 }

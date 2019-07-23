@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -43,22 +42,24 @@ public class MainActivity extends AppCompatActivity {
                     InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 } catch (Exception e) {
-
+                e.printStackTrace();
                 }
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(MainActivity.this,ListActivity.class);
-                startActivity(intent);
+               if(databaseHelper.isNullOrNot()){
+                   Intent intent= new Intent(MainActivity.this,ListActivity.class);
+                   startActivity(intent);
+               }
             }
         });
     }
 
     public void addData(String newEntry) {
         boolean insertData= databaseHelper.addData(newEntry);
-        if(insertData==true){
+        if(insertData){
             toastMessage("success");
         }
         else{

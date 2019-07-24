@@ -42,8 +42,7 @@ public class EditDataActivity extends AppCompatActivity {
                     Log.d(TAG, "updating "+ name+" "+"to "+newName);
                     toastMessage("Success");
                     editText.setText("");
-                    Intent intent = new Intent(EditDataActivity.this,MainActivity.class);
-                    startActivity(intent);
+                    finish();
                 }
 
             }
@@ -54,8 +53,7 @@ public class EditDataActivity extends AppCompatActivity {
                 databaseHelper.deleteName(name);
                 toastMessage("done");
                 editText.setText("");
-                Intent intent = new Intent(EditDataActivity.this,MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

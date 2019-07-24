@@ -34,6 +34,7 @@ public class ListActivity extends AppCompatActivity {
                 intent.putExtra("id", position);
                 intent.putExtra("name", name);
                 startActivity(intent);
+                finish();
 
             }
         });
